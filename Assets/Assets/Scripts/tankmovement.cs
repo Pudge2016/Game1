@@ -23,7 +23,7 @@ public class tankmovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(timer);
+       // Debug.Log(timer);
         if (Input.GetKeyDown(KeyCode.W))
         {
             lastKeyPressed = KeyCode.W;
@@ -74,4 +74,5 @@ public class tankmovement : MonoBehaviour
         }
         return false;
     }
+   
 }
