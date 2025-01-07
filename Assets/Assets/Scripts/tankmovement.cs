@@ -22,7 +22,7 @@ public class tankmovement : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        Debug.Log(currentSpeed);
+        //Debug.Log(currentSpeed);
         float moveInput = Input.GetAxis("Vertical"); // W (1) / S (-1)
         float turnInput = Input.GetAxis("Horizontal"); // A (-1) / D (1)
 
@@ -64,6 +64,26 @@ public class tankmovement : MonoBehaviour
         else if (timer >= 0.2f)
         {
             transform.Rotate(Vector3.forward * -turnInput * turnSpeed * Time.deltaTime);
+        }
+
+        
+    }
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        // Перевірка, чи танк зіткнувся з об'єктом з тегом "rock"
+        if (collision.gameObject.CompareTag("Rock"))
+        {
+            moveSpeed = 0.5f;
+            //Debug.Log("Швидкість танка зменшена через зіткнення з rock!");
+        }
+    }
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        // Відновлення максимальної швидкості після того, як танк перестає торкатися об'єкта
+        if (collision.gameObject.CompareTag("Rock"))
+        {
+            moveSpeed = 5f; // Відновлення максимальної швидкості
+            Debug.Log("Швидкість танка відновлена після виходу з rock!");
         }
     }
 }
