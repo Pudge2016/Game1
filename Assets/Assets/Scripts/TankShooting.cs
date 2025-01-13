@@ -1,29 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class TankShooting : MonoBehaviour
 {
 
-    public GameObject projectilePrefab; // Префаб снаряда
+    public GameObject projectilePrefab;
+    public TilemapCollider2D smallrock; 
+    public EdgeCollider2D Ammo;
+    
     public Transform firePoint;         // Точка, звідки стріляє танк
     public float projectileSpeed = 10f; // Швидкість снаряда
 
     public float fireRate = 0.5f;       // Затримка між пострілами
     private float nextFireTime = 0f;    // Час до наступного пострілу
 
+    private void Start()
+    {
+        Physics2D.IgnoreCollision(Ammo, smallrock);
+    }
     void Update()
     {
         if (Input.GetMouseButtonDown(0) && Time.time >= nextFireTime) // Клавіша для стрільби
         {
             Shoot();
-            nextFireTime = Time.time + fireRate;
+            nextFireTime = Time.deltaTime + fireRate;
             
         }
     }
 
     void Shoot()
     {
+        
         // Створюємо снаряд у точці firePoint
         GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
 
@@ -43,6 +52,12 @@ public class TankShooting : MonoBehaviour
         {
             Destroy(gameObject);
             Debug.Log("babax");
+        }
+        if (collision.gameObject.CompareTag("SmallRock"))
+        {
+            
+           // Destroy(gameObject);
+           // Debug.Log("babax");
         }
     }
 }

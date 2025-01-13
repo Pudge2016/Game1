@@ -13,6 +13,7 @@ public class tankmovement : MonoBehaviour
 
     private float timer = 0f;
     private bool isTimerRunning = true;
+    public float CurrentSpeed => currentSpeed;
 
     void Start()
     {
@@ -65,7 +66,7 @@ public class tankmovement : MonoBehaviour
         {
             transform.Rotate(Vector3.forward * -turnInput * turnSpeed * Time.deltaTime);
         }
-
+        //Debug.Log(currentSpeed);
         
     }
     void OnCollisionEnter2D(Collision2D collision)
