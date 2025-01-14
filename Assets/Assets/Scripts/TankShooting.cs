@@ -5,6 +5,7 @@ using UnityEngine.Tilemaps;
 
 public class TankShooting : MonoBehaviour
 {
+    private Animator anim;
 
     public GameObject projectilePrefab;
     public TilemapCollider2D smallrock; 
@@ -13,21 +14,45 @@ public class TankShooting : MonoBehaviour
     public Transform firePoint;         // Точка, звідки стріляє танк
     public float projectileSpeed = 10f; // Швидкість снаряда
 
-    public float fireRate = 0.5f;       // Затримка між пострілами
+    public float fireRate = 3f;       // Затримка між пострілами
     private float nextFireTime = 0f;    // Час до наступного пострілу
+
+
+    public float timerDuration = 10f; // Тривалість таймера в секундах
+    private float timer;
+    private bool isTimerActive = false;
 
     private void Start()
     {
+        anim = GetComponent<Animator>();
         Physics2D.IgnoreCollision(Ammo, smallrock);
+       
+        timer = fireRate;
     }
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && Time.time >= nextFireTime) // Клавіша для стрільби
+       Debug.Log(isTimerActive);
+        
+        if (Input.GetMouseButtonDown(0) && !isTimerActive) // Клавіша для стрільби
         {
-            Shoot();
-            nextFireTime = Time.deltaTime + fireRate;
+            isTimerActive = true;
+            //anim.SetTrigger("Shoot");
+            Shoot();            
+            //nextFireTime = Time.time + fireRate;
+            timer = fireRate;
             
+
+
         }
+        if (isTimerActive)
+        {
+            timer -= Time.deltaTime;
+            if (timer <= 0)
+            {
+                isTimerActive = false;             
+            }
+        }
+       // Debug.Log(timer.ToString());
     }
 
     void Shoot()
@@ -44,7 +69,7 @@ public class TankShooting : MonoBehaviour
         }
 
         // Знищити снаряд через певний час (щоб уникнути переповнення сцени)
-        Destroy(projectile, 5f);
+        Destroy(projectile, 2f);
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -60,4 +85,5 @@ public class TankShooting : MonoBehaviour
            // Debug.Log("babax");
         }
     }
+    
 }

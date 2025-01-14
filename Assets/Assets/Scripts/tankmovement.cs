@@ -14,14 +14,18 @@ public class tankmovement : MonoBehaviour
     private float timer = 0f;
     private bool isTimerRunning = true;
     public float CurrentSpeed => currentSpeed;
+    private Animation mAnimation;
 
     void Start()
     {
+        mAnimation = GetComponent<Animation>();
         rb = GetComponent<Rigidbody2D>();
+        
     }
 
     void Update()
     {
+
         timer += Time.deltaTime;
         //Debug.Log(currentSpeed);
         float moveInput = Input.GetAxis("Vertical"); // W (1) / S (-1)

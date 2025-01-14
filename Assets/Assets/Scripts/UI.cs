@@ -21,7 +21,7 @@ public class UI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(tankMovement.CurrentSpeed);
+        //Debug.Log(tankMovement.CurrentSpeed);
         tankSpeed.value = tankMovement.CurrentSpeed;
         if (tankMovement != null && tankSpeed != null)
         {
